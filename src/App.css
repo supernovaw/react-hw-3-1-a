@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+.RepairNoteForm {
+  margin: 20px 0;
+}
+
+.RepairNoteForm>*:not(:first-child) {
+  margin-left: 10px;
+}
+
+.RepairNoteForm .type-input {
+  width: 150px;
+}
+
+.RepairNoteForm .cost-input {
+  width: 80px;
+}
+
+.RepairNotesList {
+  text-align: start;
+  margin: auto;
+  display: inline-block;
+}
+
+.RepairNotesList>*:not(:first-child) {
+  margin-top: 10px;
+}
+
+.RepairNotesList li {
+  transition: color 0.2s ease-out;
+}
+
+.RepairNotesList li button {
+  margin-left: 10px;
+}
+
+.RepairNotesList li.highlight {
+  color: lightskyblue;
+}
