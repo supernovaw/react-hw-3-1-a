@@ -40,15 +40,22 @@ const RepairNoteForm = ({ note, handleSave, handleCancel }) => {
   );
 };
 
-const RepairNotesList = ({ notes, handleEdit, handleRemove, highlightId }) => (
-  <ul className="RepairNotesList">
-    {notes.map(n => <li key={n.id} className={highlightId === n.id ? "highlight" : ""}>
-      {n.cost + " for " + n.type}
-      <button onClick={e => handleEdit(n.id)}>Edit</button>
-      <button onClick={e => handleRemove(n.id)}>Remove</button>
-    </li>)}
-  </ul>
-);
+const RepairNotesList = ({ notes, handleEdit, handleRemove, highlightId, filter }) => {
+  const filterFn = (n, match) => n.type.toLowerCase().includes(match.toLowerCase());
+  const matchingNotes = filter.length > 0 ? notes.filter(n => filterFn(n, filter)) : notes;
+
+  return (
+    <ul className="RepairNotesList">
+      {matchingNotes.map(n => <li key={n.id} className={highlightId === n.id ? "highlight" : ""}>
+
+        {n.cost + " for " + n.type}
+        <button onClick={e => handleEdit(n.id)}>Edit</button>
+        <button onClick={e => handleRemove(n.id)}>Remove</button>
+
+      </li>)}
+    </ul>
+  );
+}
 
 export default function App() {
   const repairNotes = useSelector(s => s.repairNotes);
@@ -63,10 +70,15 @@ export default function App() {
   const handleEdit = setEditedNoteId;
   const handleRemove = removeNote;
 
+  const filterRef = useRef(null);
+  const [filter, setFilter] = useState("");
+  const onFilter = e => setFilter(e.target.value);
+
   return (
     <div className="App">
       <RepairNoteForm {...{ note: editedNote, handleSave, handleCancel }} />
-      <RepairNotesList {...{ notes: repairNotes, handleRemove, handleEdit, highlightId: editedNoteId }} />
+      <input className="filter-input" ref={filterRef} onChange={onFilter} placeholder="Filter…" />
+      <RepairNotesList {...{ notes: repairNotes, handleRemove, handleEdit, highlightId: editedNoteId, filter }} />
     </div>
   );
 };

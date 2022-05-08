@@ -18,6 +18,12 @@
   width: 80px;
 }
 
+.filter-input {
+  display: block;
+  margin: 10px auto;
+  width: 360px;
+}
+
 .RepairNotesList {
   text-align: start;
   margin: auto;
